@@ -27,11 +27,12 @@ interface GameProps {
   difficulty: Difficulty;
 }
 
-const targets = targetList.slice(0, targetList.indexOf("murky") + 1); // Words no rarer than this one
+const targets = targetList.slice(0, targetList.indexOf("violator") + 1); // Words no rarer than this one
 const minWordLength = 4;
 const maxWordLength = 11;
 
 function randomTarget(wordLength: number): string {
+  console.log("randomTarget");
   const eligible = targets.filter((word) => word.length === wordLength);
   let candidate: string;
   do {
@@ -44,7 +45,7 @@ function getChallengeUrl(target: string): string {
   return (
     window.location.origin +
     window.location.pathname +
-    "?challenge=" +
+    "?summons=" +
     encode(target)
   );
 }
@@ -52,7 +53,7 @@ function getChallengeUrl(target: string): string {
 let initChallenge = "";
 let challengeError = false;
 try {
-  initChallenge = decode(urlParam("challenge") ?? "").toLowerCase();
+  initChallenge = decode(urlParam("summons") ?? "").toLowerCase();
 } catch (e) {
   console.warn(e);
   challengeError = true;
@@ -68,8 +69,8 @@ function Game(props: GameProps) {
   const [currentGuess, setCurrentGuess] = useState<string>("");
   const [hint, setHint] = useState<string>(
     challengeError
-      ? `Invalid challenge string, playing random game.`
-      : `Make your first guess!`
+      ? `Invalid hash string, playing random match.`
+      : `Go for your first try!`
   );
   const [challenge, setChallenge] = useState<string>(initChallenge);
   const [wordLength, setWordLength] = useState(
@@ -123,13 +124,13 @@ function Game(props: GameProps) {
 
   const onKey = (key: string) => {
     if (gameState !== GameState.Playing) {
-      if (key === "Enter") {
+      //if (key === "Enter") {
         startNextGame();
-      }
+      //}
       return;
     }
     if (guesses.length === props.maxGuesses) return;
-    if (/^[a-z]$/i.test(key)) {
+    if (/^[a-df-z]$/i.test(key)) {
       setCurrentGuess((guess) =>
         (guess + key.toLowerCase()).slice(0, wordLength)
       );
@@ -138,7 +139,7 @@ function Game(props: GameProps) {
     } else if (key === "Backspace") {
       setCurrentGuess((guess) => guess.slice(0, -1));
       setHint("");
-    } else if (key === "Enter") {
+    } else if (key === "Enter" || key == "Go") {
       if (currentGuess.length !== wordLength) {
         setHint("Too short");
         return;
@@ -159,8 +160,8 @@ function Game(props: GameProps) {
       setCurrentGuess((guess) => "");
 
       const gameOver = (verbed: string) =>
-        `You ${verbed}! The answer was ${target.toUpperCase()}. (Enter to ${
-          challenge ? "play a random game" : "play again"
+        `You ${verbed}! My word was ${target.toUpperCase()}. (Push any button to ${
+          challenge ? "play a random match" : "play again"
         })`;
 
       if (currentGuess === target) {
@@ -226,7 +227,7 @@ function Game(props: GameProps) {
   return (
     <div className="Game" style={{ display: props.hidden ? "none" : "block" }}>
       <div className="Game-options">
-        <label htmlFor="wordLength">Letters:</label>
+        <label htmlFor="wordLength">How long a word?</label>
         <input
           type="range"
           min={minWordLength}
@@ -254,13 +255,13 @@ function Game(props: GameProps) {
           disabled={gameState !== GameState.Playing || guesses.length === 0}
           onClick={() => {
             setHint(
-              `The answer was ${target.toUpperCase()}. (Enter to play again)`
+              `My word was ${target.toUpperCase()}. (Push any button to play again)`
             );
             setGameState(GameState.Lost);
             (document.activeElement as HTMLElement)?.blur();
           }}
         >
-          Give up
+          Succumb
         </button>
       </div>
       <table
@@ -287,17 +288,17 @@ function Game(props: GameProps) {
             onClick={() => {
               share(
                 getChallengeUrl(target),
-                "Challenge link copied to clipboard!"
+                "Summons link now on clipboard!"
               );
             }}
           >
-            Challenge a friend to this word
+            Summon a pal to this word
           </button>{" "}
           <button
             onClick={() => {
               share(
                 getChallengeUrl(target),
-                "Result copied to clipboard!",
+                "Cryptic symbols now on clipboard!",
                 guesses
                   .map((guess) =>
                     clue(guess, target)
@@ -308,15 +309,15 @@ function Game(props: GameProps) {
               );
             }}
           >
-            Share emoji results
+            Brag
           </button>
         </p>
       )}
       {challenge ? (
-        <div className="Game-seed-info">playing a challenge game</div>
+        <div className="Game-seed-info">playing a summons</div>
       ) : seed ? (
         <div className="Game-seed-info">
-          seed {seed}, length {wordLength}, game {gameNumber}
+          hash {seed}, symbol count {wordLength}, match {gameNumber}
         </div>
       ) : undefined}
     </div>

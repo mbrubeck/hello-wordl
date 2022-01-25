@@ -23,7 +23,7 @@ export function urlParam(name: string): string | null {
   return new URLSearchParams(window.location.search).get(name);
 }
 
-export const seed = Number(urlParam("seed"));
+export const seed = Number(urlParam("today"));
 const makeRandom = () => (seed ? mulberry32(seed) : () => Math.random());
 let random = makeRandom();
 

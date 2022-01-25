@@ -58,15 +58,7 @@ function App() {
   return (
     <div className="App-container">
       <h1>
-        <span
-          style={{
-            color: difficulty > 0 ? "#e66" : "inherit",
-            fontStyle: difficulty > 1 ? "italic" : "inherit",
-          }}
-        >
-          hell
-        </span>
-        o wordl
+        ourdl
       </h1>
       <div className="top-right">
         {page !== "game" ? (
@@ -91,7 +83,7 @@ function App() {
           onClick={() =>
             (document.location = seed
               ? "?"
-              : "?seed=" +
+              : "?today=" +
                 new Date().toISOString().replace(/-/g, "").slice(0, 8))
           }
         >
@@ -108,7 +100,7 @@ function App() {
               checked={dark}
               onChange={() => setDark((x: boolean) => !x)}
             />
-            <label htmlFor="dark-setting">Dark theme</label>
+            <label htmlFor="dark-setting">Dark background</label>
           </div>
           <div className="Settings-setting">
             <input
@@ -133,9 +125,9 @@ function App() {
               >
                 {
                   [
-                    `Guesses must be valid dictionary words.`,
-                    `Wordle's "Hard Mode". Green letters must stay fixed, and yellow letters must be reused.`,
-                    `An even stricter Hard Mode. Yellow letters must move away from where they were clued, and gray clues must be obeyed.`,
+                    `Only allows valid dictionary words.`,
+                    `A symbol in its right location must stay put. Right symbols in the wrong locations must occur again, in any location.`,
+                    `A symbol in its right location must stay put. Right symbols in the wrong locations must occur again, in a distinct location.`,
                   ][difficulty]
                 }
               </div>
