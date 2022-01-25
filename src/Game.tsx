@@ -247,7 +247,7 @@ function Game(props: GameProps) {
             setCurrentGuess("");
             setTarget(randomTarget(length));
             setWordLength(length);
-            setHint(`${length} letters`);
+            setHint(`${length} symbols`);
           }}
         ></input>
         <button
