@@ -309,7 +309,7 @@ function Game(props: GameProps) {
               );
             }}
           >
-            Brag
+            Publish my grid
           </button>
         </p>
       )}
