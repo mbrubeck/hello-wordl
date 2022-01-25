@@ -126,8 +126,8 @@ function App() {
                 {
                   [
                     `Only allows valid dictionary words.`,
-                    `A symbol in its right location must stay put. Right symbols in the wrong locations must occur again, in any location.`,
-                    `A symbol in its right location must stay put. Right symbols in the wrong locations must occur again, in a distinct location.`,
+                    `A symbol in its right location must stay put. Right symbols in wrong locations must occur again, in any location.`,
+                    `A symbol in its right location must stay put. Right symbols in wrong locations must occur again, in a distinct location.`,
                   ][difficulty]
                 }
               </div>
