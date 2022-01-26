@@ -124,9 +124,9 @@ function Game(props: GameProps) {
 
   const onKey = (key: string) => {
     if (gameState !== GameState.Playing) {
-      //if (key === "Enter") {
+      if (key === "Enter") {
         startNextGame();
-      //}
+      }
       return;
     }
     if (guesses.length === props.maxGuesses) return;
@@ -160,8 +160,8 @@ function Game(props: GameProps) {
       setCurrentGuess((guess) => "");
 
       const gameOver = (verbed: string) =>
-        `You ${verbed}! My word was ${target.toUpperCase()}. (Push any button to ${
-          challenge ? "play a random match" : "play again"
+        `You ${verbed}! My word was ${target.toUpperCase()}. (Push Go to ${
+          (challenge || seed) ? "play a random match" : "play again"
         })`;
 
       if (currentGuess === target) {
@@ -255,7 +255,7 @@ function Game(props: GameProps) {
           disabled={gameState !== GameState.Playing || guesses.length === 0}
           onClick={() => {
             setHint(
-              `My word was ${target.toUpperCase()}. (Push any button to play again)`
+              `My word was ${target.toUpperCase()}. (Push Go to play again)`
             );
             setGameState(GameState.Lost);
             (document.activeElement as HTMLElement)?.blur();
