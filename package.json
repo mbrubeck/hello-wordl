@@ -1,7 +1,7 @@
 {
-  "name": "ourdl",
+  "name": "qwrtl",
   "version": "0.1.0",
-  "homepage": "https://limpet.net/ourdl/",
+  "homepage": "https://limpet.net/qwrtl/",
   "private": false,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.1",
