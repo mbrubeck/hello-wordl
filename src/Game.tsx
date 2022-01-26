@@ -261,7 +261,7 @@ function Game(props: GameProps) {
             (document.activeElement as HTMLElement)?.blur();
           }}
         >
-          Succumb
+          Abandon this match
         </button>
       </div>
       <table
