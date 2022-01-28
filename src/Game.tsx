@@ -163,7 +163,7 @@ function Game(props: GameProps) {
 
       const gameOver = (verbed: string) =>
         `You ${verbed}! My word was ${target.toUpperCase()}. (Push Go to ${
-          (challenge || seed) ? "play a random match" : "play again"
+          challenge ? "play a random match" : "play again"
         })`;
 
       if (currentGuess === target) {
